@@ -144,14 +144,40 @@ app.get('/glasovanje/03', (req, res) => {  //dohvaćanje trećeg glasača
     res.json(glasovanje.glasaci[3]);
 })
 
-app.get('/glasovanje/04', (req, res) => {
+app.get('/glasovanje/04', (req, res) => { //dohvaćanje imena četvrtog glasača
     res.status(200);
     res.json(glasovanje.glasaci[4].ime);
 })
 
-app.get('/glasovanje/04a', (req, res) => {
+app.get('/glasovanje/04a', (req, res) => { //dohvaćanje prezimena četvrtog glasača
     res.status(200);
     res.json(glasovanje.glasaci[4].prezime);
+})
+
+
+app.get('/glasovanje/pretraga', (req, res) => {
+
+    let ime = req.query.ime
+
+    let prezime = req.query.prezime
+
+    let glas = glasovanje.glasaci;
+
+    if (ime) {
+        glas = glas.filter(e => {
+            return e.ime.indexOf(ime) >= 0
+        });
+    }
+
+    if (prezime) {
+        glas = glas.filter(e => {
+            return e.prezime.indexOf(prezime) >= 0
+        });
+    }
+
+    res.status(200);
+    res.json(glas);
+
 })
 
 //POST metoda  
@@ -184,7 +210,7 @@ app.post('/glasovanje-email', (req, res) => { //provjera prijave glasača, njego
         return res.status(400).send('No token');
     }
 
-    if (req.header('x-auth-token') !== 'mvidov@uniri.hr') {
+    if (req.header('x-auth-token') !== 'vkardum@uniri.hr') {
         return res.status(401).send('Not authorised');
     }
 
@@ -198,7 +224,7 @@ app.post('/glasovanje-password', (req, res) => { //provjera prijave glasača, nj
         return res.status(400).send('No token');
     }
 
-    if (req.header('x-auth-token') !== 'vidov61') {
+    if (req.header('x-auth-token') !== 'kardum61') {
         return res.status(401).send('Not authorised');
     }
 
@@ -241,6 +267,32 @@ app.get('/prijava', (req, res) => {  //dohvaćanje svih kandidata
     res.status(200);
     res.json(prijava);
 });
+
+
+app.get('/prijava/pretraga', (req, res) => {
+
+    let ime = req.query.ime
+
+    let prezime = req.query.prezime
+
+    let prijave = prijava.kandidati
+
+    if (ime) {
+        prijave = prijave.filter(e => {
+            return e.ime.indexOf(ime) >= 0
+        })
+    }
+
+    if (prezime) {
+        prijave = prijave.filter(e => {
+            return e.prezime.indexOf(prezime) >= 0
+        })
+    }
+
+    res.status(200)
+    res.json(prijave)
+
+})
 
 app.get('/prijava/01', (req, res) => {  //dohvaćanje prvog kandidata
     res.status(200);
