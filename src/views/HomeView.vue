@@ -116,6 +116,8 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 import store from "@/store.js";
 
+import { obavijesti } from "@/services";
+
 let ime = "Robert";
 
 let prezime = "Pauković";
@@ -137,13 +139,18 @@ export default {
   },
   methods: {
     getEvents() {
-      fetch("http://localhost:3000/obavijesti")
+      obavijesti.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios podaci sa backenda", data);
+      });
+
+      /*  fetch("http://localhost:3000/obavijesti")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
           console.log("Obavijesti sa backenda", data);
-        });
+        });*/
     },
   },
 };

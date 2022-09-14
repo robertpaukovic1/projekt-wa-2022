@@ -12,6 +12,8 @@
 </template>  
 
 <script>
+import { FAQ } from "@/services";
+
 export default {
   data() {
     return {
@@ -64,11 +66,16 @@ export default {
 
   methods: {
     getFAQs() {
-      fetch("http://localhost:3000/FAQ")
+      FAQ.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios česta pitanja i odgovori sa backend-a", data);
+      });
+
+      /*  fetch("http://localhost:3000/FAQ")
         .then((res) => res.json())
         .then((data) =>
           console.log("Česta pitanja i odgovori sa backenda", data)
-        );
+        ); */
     },
   },
 };

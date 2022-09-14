@@ -153,6 +153,8 @@
 </style>  
 
 <script>
+import { prijava } from "@/services";
+
 export default {
   name: "form",
   mounted() {
@@ -165,9 +167,15 @@ export default {
     },
 
     getNominees() {
-      fetch("http://localhost:3000/prijava")
+      prijava.getAll().then((response) => {
+        let data = response.data;
+
+        console.log("Axios kandidati sa backenda", data);
+      });
+
+      /*  fetch("http://localhost:3000/prijava")
         .then((res) => res.json())
-        .then((data) => console.log("Lista kandidata sa backenda", data));
+        .then((data) => console.log("Lista kandidata sa backenda", data)); */
     },
   },
 };

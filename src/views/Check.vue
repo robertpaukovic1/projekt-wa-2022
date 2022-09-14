@@ -140,6 +140,8 @@
 </style>    
 
 <script>
+import { glasovanje } from "@/services";
+
 export default {
   name: "check",
   mounted() {
@@ -150,9 +152,14 @@ export default {
       this.$router.push({ name: "Poll" });
     },
     getVoters() {
-      fetch("http://localhost:3000/glasovanje")
+      glasovanje.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios glasači sa backenda", data);
+      });
+
+      /* fetch("http://localhost:3000/glasovanje")
         .then((res) => res.json())
-        .then((data) => console.log("Lista glasača sa backenda", data));
+        .then((data) => console.log("Lista glasača sa backenda", data)); */
     },
   },
 };

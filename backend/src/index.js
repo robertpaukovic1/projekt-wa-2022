@@ -59,9 +59,12 @@ app.get('/naziv/tekst', (req, res) => {  //dohvaćanje teksta
 //POST metoda  
 
 app.post('/obavijesti', (req, res) => { //upis i objava nove obavijesti 
-    res.status(201);
-    res.send(req.body);
-});
+
+    let poruka = req.body;
+    obavijesti.novo.push(poruka)
+    res.json("OK")
+
+})
 
 //PUT metoda 
 
@@ -70,6 +73,7 @@ app.put('/obavijesti/:id', (req, res) => { //izmjena postojeće obavijesti
         id: req.params.id,
         tekst: req.body.tekst
     });
+    res.json("OK")
 })
 
 //DELETE metoda   
@@ -124,8 +128,11 @@ app.get('/FAQ/question02', (req, res) => {  //Dohvaćanje odgovora iz četvrtog 
 //POST metoda  
 
 app.post('/FAQ', (req, res) => { //Objava novog učestalog pitanja 
-    res.status(201);
-    res.send(req.body);
+    let pitanje = req.body;
+    FAQ.questions.push(pitanje)
+    res.json("OK")
+
+
 })
 
 
@@ -136,8 +143,8 @@ app.post('/FAQ', (req, res) => { //Objava novog učestalog pitanja
 
 app.get('/glasovanje', (req, res) => {  //dohvaćanje svih glasača  
     res.status(200);
-    res.json(glasovanje);
-});
+    res.json(glasovanje)
+})
 
 app.get('/glasovanje/03', (req, res) => {  //dohvaćanje trećeg glasača
     res.status(200);
@@ -183,8 +190,11 @@ app.get('/glasovanje/pretraga', (req, res) => {
 //POST metoda  
 
 app.post('/glasovanje', (req, res) => {  //uvođenje novog glasača 
-    res.status(200);
-    res.json(req.body);
+
+    let korisnik = req.body;
+    glasovanje.glasaci.push(korisnik)
+    res.send("OK")
+
 });
 
 app.post('/glasovanje-ime', (req, res) => { //navođenje imena jednog glasača 
@@ -264,8 +274,10 @@ app.delete('/glasovanje/:OIB', (req, res) => {   //brisanje postojećeg glasača
 
 
 app.get('/prijava', (req, res) => {  //dohvaćanje svih kandidata
+
     res.status(200);
     res.json(prijava);
+
 });
 
 
@@ -329,8 +341,13 @@ app.get('/prijava/fakultet', (req, res) => { //dohvaćanje završenog faulteta �
 //POST metoda  
 
 app.post('/prijava', (req, res) => {  //uvođenje novog kandidata
-    res.status(200);
-    res.json(req.body);
+
+    let novi = req.body;
+
+    prijava.kandidati.push(novi)
+
+    res.json("OK")
+
 });
 
 
