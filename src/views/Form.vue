@@ -153,7 +153,7 @@
 </style>  
 
 <script>
-import { prijava } from "@/services";
+import { prijava, prijava01 } from "@/services";
 
 export default {
   name: "form",
@@ -171,6 +171,12 @@ export default {
         let data = response.data;
 
         console.log("Axios kandidati sa backenda", data);
+      });
+
+      prijava01.getAll().then((response) => {
+        let data = response.data;
+
+        console.log("Axios jedan kandidat sa backenda", data);
       });
 
       /*  fetch("http://localhost:3000/prijava")

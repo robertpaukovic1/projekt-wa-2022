@@ -140,7 +140,7 @@
 </style>    
 
 <script>
-import { glasovanje } from "@/services";
+import { glasovanje, glasovanje03 } from "@/services";
 
 export default {
   name: "check",
@@ -155,6 +155,11 @@ export default {
       glasovanje.getAll().then((response) => {
         let data = response.data;
         console.log("Axios glasači sa backenda", data);
+      });
+
+      glasovanje03.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios jednog glasača", data);
       });
 
       /* fetch("http://localhost:3000/glasovanje")

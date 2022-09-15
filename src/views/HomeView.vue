@@ -116,7 +116,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 import store from "@/store.js";
 
-import { obavijesti } from "@/services";
+import { obavijesti, obavijest } from "@/services";
 
 let ime = "Robert";
 
@@ -141,7 +141,12 @@ export default {
     getEvents() {
       obavijesti.getAll().then((response) => {
         let data = response.data;
-        console.log("Axios podaci sa backenda", data);
+        console.log("Axios sve obavijesti backenda", data);
+      });
+
+      obavijest.getAll().then((response) => {
+        let data = response.data;
+        console.log(" Axios samo jedna obavijest", data);
       });
 
       /*  fetch("http://localhost:3000/obavijesti")

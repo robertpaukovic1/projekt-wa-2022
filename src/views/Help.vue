@@ -12,7 +12,7 @@
 </template>  
 
 <script>
-import { FAQ } from "@/services";
+import { FAQ, pitanje01, pitanje02 } from "@/services";
 
 export default {
   data() {
@@ -69,6 +69,16 @@ export default {
       FAQ.getAll().then((response) => {
         let data = response.data;
         console.log("Axios česta pitanja i odgovori sa backend-a", data);
+      });
+
+      pitanje01.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios prvo pitanje ", data);
+      });
+
+      pitanje02.getAll().then((response) => {
+        let data = response.data;
+        console.log("Axios drugo pitanje ", data);
       });
 
       /*  fetch("http://localhost:3000/FAQ")

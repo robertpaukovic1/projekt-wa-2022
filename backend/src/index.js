@@ -143,7 +143,7 @@ app.post('/FAQ', (req, res) => { //Objava novog učestalog pitanja
 
 app.get('/glasovanje', (req, res) => {  //dohvaćanje svih glasača  
     res.status(200);
-    res.json(glasovanje)
+    res.json(glasovanje);
 })
 
 app.get('/glasovanje/03', (req, res) => {  //dohvaćanje trećeg glasača
@@ -245,18 +245,17 @@ app.post('/glasovanje-password', (req, res) => { //provjera prijave glasača, nj
 
 //PUT metoda  
 
-app.put('/glasovanje/:OIB/prezime', (req, res) => { //izmjena prezimena postojećeg glasača
+app.put('/glasovanje/:OIB', (req, res) => { //izmjena podataka postojećeg glasača
     res.json({
         OIB: req.params.OIB,
-        prezime: req.body.prezime
+        ime: req.body.ime,
+        prezime: req.body.prezime,
+        grad_prebivalista: req.body.grad_prebivalista,
+        status_korisnika: req.body.status_korisnika,
+        ustanova: req.body.ustanova
     });
-})
 
-app.put('/glasovanje/:OIB/grad', (req, res) => { //izmjena grada prebivališta postojećeg glasača
-    res.json({
-        OIB: req.params.OIB,
-        grad_prebivalista: req.body.grad_prebivalista
-    });
+    res.status(201);
 })
 
 //DELETE metoda  
@@ -279,6 +278,11 @@ app.get('/prijava', (req, res) => {  //dohvaćanje svih kandidata
     res.json(prijava);
 
 });
+
+app.get('/prijava/:OIB', (req, res) => {
+    res.status(200)
+    res.json(prijava)
+})
 
 
 app.get('/prijava/pretraga', (req, res) => {
@@ -306,35 +310,34 @@ app.get('/prijava/pretraga', (req, res) => {
 
 })
 
-app.get('/prijava/01', (req, res) => {  //dohvaćanje prvog kandidata
+app.get('/prijava-01', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[0]);
+    res.json(prijava.kandidati[0])
 })
 
-app.get('/prijava/04', (req, res) => { // dohvaćanje četvrtog kandidata
+app.get('/prijava-01a', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[3]);
+    res.json(prijava.kandidati[2].grad_prebivališta)
 })
 
-app.get('/prijava/ustanova02', (req, res) => { //dohvaćanje ustanove u kojoj radi drugi kandidat
+app.get('/prijava-03', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[1].ustanova);
+    res.json(prijava.kandidati[2])
 })
 
-
-app.get('/prijava/status03', (req, res) => { //dohvaćanje statusa trećeg kandidata
+app.get('/prijava-03a', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[2].status_kandidata);
+    res.json(prijava.kandidati[2].fakultet)
 })
 
-app.get('/prijava/srednja', (req, res) => { //dohvaćanje završene srednje škole trećeg kandidata
+app.get('/prijava-02', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[2].srednja_skola);
+    res.json(prijava.kandidati[1])
 })
 
-app.get('/prijava/fakultet', (req, res) => { //dohvaćanje završenog faulteta četvrtog kandidata
+app.get('/prijava-02a', (req, res) => {
     res.status(200);
-    res.json(prijava.kandidati[3].fakultet);
+    res.json(prijava.kandidati[1].srednja_skola)
 })
 
 
@@ -414,11 +417,19 @@ app.put('/prijava/:OIB/prezime', (req, res) => { //izmjena prezimena postojećeg
     });
 })
 
-app.put('/prijava/:OIB/grad_prebivalista', (req, res) => { //izmjena grada prebivališta postojećeg kandidata
+app.put('/prijava/:OIB', (req, res) => { //izmjena podataka postojećeg kandidata
     res.json({
         OIB: req.params.OIB,
-        grad_prebivalista: req.body.grad_prebivalista
+        ime: req.body.ime,
+        prezime: req.body.prezime,
+        grad_prebivalista: req.body.grad_prebivalista,
+        srednja_skola: req.body.srednja_skola,
+        status_kandidata: req.body.status_kandidata,
+        fakultet: req.body.fakultet,
+        ustanova: req.body.ustanova
     });
+
+    res.status(201);
 })
 
 
@@ -431,38 +442,6 @@ app.delete('/glasovanje/:OIB', (req, res) => {   //brisanje postojećeg glasača
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Ruta za slušanje zahtjeva
 
 app.listen(port, () => console.log(`Slusam na portu ${port}`))
