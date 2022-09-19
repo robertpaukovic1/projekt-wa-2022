@@ -1,4 +1,7 @@
 import express from 'express'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+import bcrypt from 'bcrypt'
 import cors from 'cors'
 import obavijesti from './obavijesti'
 import FAQ from './FAQ'
@@ -6,6 +9,8 @@ import glasovanje from './glasovanje'
 import prijava from './prijava_kandidata';
 
 const app = express();
+
+dotenv.config();
 
 const port = 3000;
 
@@ -161,6 +166,11 @@ app.get('/glasovanje/04a', (req, res) => { //dohvaćanje prezimena četvrtog gla
     res.json(glasovanje.glasaci[4].prezime);
 })
 
+app.get('/glasovanje-status', (req, res) => {
+    res.status(200);
+    res.json(glasovanje.glasaci[4].status_korisnika)
+})
+
 
 app.get('/glasovanje/pretraga', (req, res) => {
 
@@ -285,7 +295,7 @@ app.get('/prijava/:OIB', (req, res) => {
 })
 
 
-app.get('/prijava/pretraga', (req, res) => {
+app.get('/prijava-pretraga', (req, res) => {
 
     let ime = req.query.ime
 
@@ -435,11 +445,83 @@ app.put('/prijava/:OIB', (req, res) => { //izmjena podataka postojećeg kandidat
 
 //DELETE metoda   
 
-app.delete('/glasovanje/:OIB', (req, res) => {   //brisanje postojećeg glasača
+app.delete('/prijava/:OIB', (req, res) => {   //brisanje postojećeg glasača
 
     res.json({ msg: `Poruka ${req.params.OIB} je obrisana` });
 
 })
+
+
+//JWT autentifikacija kandidata  
+
+const posts = [
+
+    {
+        username: "IgorBubalo",
+        status: "zaposlenik",
+        title: "kandidat 1"
+    },
+
+    {
+        username: "AlenkaJM",
+        status: "dekanica",
+        title: "kandidat 2"
+
+    },
+    {
+        username: "Vkardum",
+        status: 'profesor',
+        title: "kandidat 3"
+    },
+
+    {
+        username: "Mlovric",
+        status: 'zaposlenik',
+        title: "kandidat 4"
+    }
+
+
+]
+
+app.get('/posts', authToken, (req, res) => {
+    res.json(posts.filter(post => post.username === req.user.name))
+
+})
+
+
+app.post('/login', (req, res) => {
+
+    const username = req.body.username
+
+    const user = {
+        name: username
+
+
+    }
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+
+    res.json({
+        accessToken: accessToken,
+
+    })
+})
+
+function authToken(req, res, next) {
+
+    const authHeader = req.headers['authorization']
+
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403)
+        req.user = user
+        next()
+    })
+}
+
+
 
 
 //Ruta za slušanje zahtjeva

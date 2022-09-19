@@ -179,7 +179,7 @@ export default {
         console.log("Axios jedan kandidat sa backenda", data);
       });
 
-      /*  fetch("http://localhost:3000/prijava")
+      /* fetch("http://localhost:3000/prijava")
         .then((res) => res.json())
         .then((data) => console.log("Lista kandidata sa backenda", data)); */
     },

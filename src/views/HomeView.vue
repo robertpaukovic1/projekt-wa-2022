@@ -149,13 +149,13 @@ export default {
         console.log(" Axios samo jedna obavijest", data);
       });
 
-      /*  fetch("http://localhost:3000/obavijesti")
+      /*fetch("http://localhost:3000/obavijesti")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
           console.log("Obavijesti sa backenda", data);
-        });*/
+        }); */
     },
   },
 };

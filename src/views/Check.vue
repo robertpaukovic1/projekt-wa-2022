@@ -162,7 +162,7 @@ export default {
         console.log("Axios jednog glasača", data);
       });
 
-      /* fetch("http://localhost:3000/glasovanje")
+      /*fetch("http://localhost:3000/glasovanje")
         .then((res) => res.json())
         .then((data) => console.log("Lista glasača sa backenda", data)); */
     },

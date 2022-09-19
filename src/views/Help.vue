@@ -81,7 +81,7 @@ export default {
         console.log("Axios drugo pitanje ", data);
       });
 
-      /*  fetch("http://localhost:3000/FAQ")
+      /*fetch("http://localhost:3000/FAQ")
         .then((res) => res.json())
         .then((data) =>
           console.log("Česta pitanja i odgovori sa backenda", data)
